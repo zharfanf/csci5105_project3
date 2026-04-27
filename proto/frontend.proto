@@ -1,0 +1,202 @@
+zharfanf
+zharfanf
+Visual Studio Code
++1
+
+Riandy — 4/16/26, 7:54 PM
+ill try and check once a day as well
+zharfanf — 4/16/26, 7:55 PM
+okay, sounds good. I'll ask the TA later on the day
+zharfanf — 4/17/26, 11:38 AM
+Hi, I talked to TA, he said the code will not be provided as he wanted to give us more free choice about the system design
+Riandy — 4/17/26, 7:46 PM
+ooh interesting
+do you want to meet up this weekend to talk about designing the project then>
+zharfanf — 4/18/26, 11:28 AM
+sure, how does tonight or tomorrow night work for you?
+Riandy — 4/18/26, 4:03 PM
+does sun at  8 work?
+zharfanf — 4/18/26, 9:18 PM
+sure, that works
+Riandy — 4/19/26, 7:59 PM
+ready whenever
+zharfanf
+ started a call that lasted 41 minutes. — 4/19/26, 8:01 PM
+Riandy — 4/19/26, 8:04 PM
+kubernetes based
+Riandy — 4/19/26, 8:27 PM
+front end
+3.1
+3.2
+4.2
+5.1
+5.2
+6
+anything else kubernetes related to deployment
+
+back end
+3.3
+4.3
+5.2
+5.3
+5.4
+shared - protofiles and writeup
+4.1 - ?
+zharfanf — 4/22/26, 1:35 PM
+Hi Riandy, have you seen the submission on canvas about checkpoint 1?
+Can we meet at 8:30pm instead?
+Riandy — 4/22/26, 4:37 PM
+i have not. ill go check it out
+830 is fine
+oh it seems that we have a check in tonight
+zharfanf — 4/22/26, 6:40 PM
+yeah, I think that should be quick
+Riandy — 4/22/26, 8:30 PM
+ready whenever
+zharfanf — 4/22/26, 8:31 PM
+one sec
+zharfanf
+ started a call that lasted 26 minutes. — 4/22/26, 8:32 PM
+Riandy — 4/22/26, 8:40 PM
+syntax = "proto3";
+
+package marketplace;
+
+// ITEMS (Section 3.1)
+
+proj3.proto
+3 KB
+Riandy — 4/22/26, 8:50 PM
+1. 
+
+Our system plans on using Kubernetes. Planning on a three layer architecture with a storage tier, service tier, and controller. We are planning on implementing quorum. The request flow would be client -> Kubernetes -> service pod -> storage for read/write, with the primary replicating to backups on every write before responding.
+
+2. 
+
+Initial system setup (Docker/Kubernetes, basic services running) - April 29
+Defining gRPC interfaces (proto file) - April 29 
+Controller implementation - April 29
+Basic read/write functionality working end-to-end - April 29
+Replication implementation - April 29
+Fault tolerance (failure detection and recovery) - May 1
+Autoscaling logic - May 1
+Testing and evaluation - May 4
+zharfanf — 4/22/26, 8:55 PM
+Image
+zharfanf — Yesterday at 1:11 PM
+Hi Riandy, I can't talk today, let's talk tomorrow like usual if you're available
+Riandy — Yesterday at 1:14 PM
+oh i was just about to say that i cant meet up tonight either haha
+ok see you tomorrow
+zharfanf — Yesterday at 1:15 PM
+hahahaha, what a coincidence, see you tmr!
+﻿
+Riandy
+riandy.
+ 
+syntax = "proto3";
+
+package marketplace;
+
+// ITEMS (Section 3.1)
+
+message Item {
+    string item_id = 1;
+    string seller_id = 2;
+    string title = 3;
+    string category = 4;
+    string description = 5;
+    double starting_price = 6;
+    double current_price = 7;
+    int32 quantity = 8;
+    string status = 9;              // "active", "sold", "auction"
+    int64 version = 10;             // optimistic concurrency / write ordering
+}
+
+// CLIENT MESSAGES (Section 3.2)
+
+// -- CreateItem --
+message CreateItemRequest {
+    string seller_id = 1;
+    string title = 2;
+    string category = 3;
+    string description = 4;
+    double starting_price = 5;
+    int32 quantity = 6;
+    string status = 7;              // "active" or "auction"
+}
+
+message CreateItemResponse {
+    bool success = 1;
+    string item_id = 2;
+    string message = 3;
+}
+
+// -- GetItem --
+message GetItemRequest {
+    string item_id = 1;
+}
+
+message GetItemResponse {
+    bool success = 1;
+    Item item = 2;
+    string message = 3;
+}
+
+// -- SearchItems --
+message SearchItemsRequest {
+    string keyword = 1;
+    string category = 2;
+}
+
+message SearchItemsResponse {
+    bool success = 1;
+    repeated Item items = 2;
+    string message = 3;
+}
+
+// -- UpdateItem --
+message UpdateItemRequest {
+    string item_id = 1;
+    string description = 2;
+    int32 quantity = 3;
+    string status = 4;
+    double current_price = 5;
+    int64 expected_version = 6;     // reject if item has been modified since this version
+}
+
+message UpdateItemResponse {
+    bool success = 1;
+    Item item = 2;
+    string message = 3;
+}
+
+// -- PlaceBid --
+message PlaceBidRequest {
+    string item_id = 1;
+    string bidder_id = 2;
+    double bid_amount = 3;
+}
+
+message PlaceBidResponse {
+    bool success = 1;
+    double current_price = 2;
+    string message = 3;
+}
+
+// AUCTION (Section 3.3)
+
+message JoinAuctionRequest {
+    string item_id = 1;
+    string bidder_id = 2;
+}
+
+message AuctionUpdate {
+    string item_id = 1;
+    double current_price = 2;
+    string bidder_id = 3;           // who placed the latest bid
+    string event_type = 4;          // "new_bid", "auction_end", "joined"
+    string message = 5;
+    int64 version = 6;
+}
+
