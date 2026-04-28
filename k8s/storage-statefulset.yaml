@@ -16,7 +16,7 @@ spec:
       containers:
         - name: ebay-storage
           image: ebay-storage:latest
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50052
           env:
