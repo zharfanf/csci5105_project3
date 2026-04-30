@@ -104,7 +104,7 @@ message AuctionUpdate {
     int64 version = 6;
 }
 
-service FrontendService {
+service MarketplaceService {
   rpc CreateItem(CreateItemRequest) returns (CreateItemResponse);
   rpc GetItem(GetItemRequest) returns (GetItemResponse);
   rpc SearchItems(SearchItemsRequest) returns (SearchItemsResponse);

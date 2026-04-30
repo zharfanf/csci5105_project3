@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import frontend_pb2 as frontend__pb2
+import marketplace_pb2 as marketplace__pb2
 
 GRPC_GENERATED_VERSION = '1.80.0'
 GRPC_VERSION = grpc.__version__
@@ -18,14 +18,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + ' but the generated code in frontend_pb2_grpc.py depends on'
+        + ' but the generated code in marketplace_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class FrontendServiceStub(object):
+class MarketplaceServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -35,33 +35,33 @@ class FrontendServiceStub(object):
             channel: A grpc.Channel.
         """
         self.CreateItem = channel.unary_unary(
-                '/marketplace.FrontendService/CreateItem',
-                request_serializer=frontend__pb2.CreateItemRequest.SerializeToString,
-                response_deserializer=frontend__pb2.CreateItemResponse.FromString,
+                '/marketplace.MarketplaceService/CreateItem',
+                request_serializer=marketplace__pb2.CreateItemRequest.SerializeToString,
+                response_deserializer=marketplace__pb2.CreateItemResponse.FromString,
                 _registered_method=True)
         self.GetItem = channel.unary_unary(
-                '/marketplace.FrontendService/GetItem',
-                request_serializer=frontend__pb2.GetItemRequest.SerializeToString,
-                response_deserializer=frontend__pb2.GetItemResponse.FromString,
+                '/marketplace.MarketplaceService/GetItem',
+                request_serializer=marketplace__pb2.GetItemRequest.SerializeToString,
+                response_deserializer=marketplace__pb2.GetItemResponse.FromString,
                 _registered_method=True)
         self.SearchItems = channel.unary_unary(
-                '/marketplace.FrontendService/SearchItems',
-                request_serializer=frontend__pb2.SearchItemsRequest.SerializeToString,
-                response_deserializer=frontend__pb2.SearchItemsResponse.FromString,
+                '/marketplace.MarketplaceService/SearchItems',
+                request_serializer=marketplace__pb2.SearchItemsRequest.SerializeToString,
+                response_deserializer=marketplace__pb2.SearchItemsResponse.FromString,
                 _registered_method=True)
         self.UpdateItem = channel.unary_unary(
-                '/marketplace.FrontendService/UpdateItem',
-                request_serializer=frontend__pb2.UpdateItemRequest.SerializeToString,
-                response_deserializer=frontend__pb2.UpdateItemResponse.FromString,
+                '/marketplace.MarketplaceService/UpdateItem',
+                request_serializer=marketplace__pb2.UpdateItemRequest.SerializeToString,
+                response_deserializer=marketplace__pb2.UpdateItemResponse.FromString,
                 _registered_method=True)
         self.PlaceBid = channel.unary_unary(
-                '/marketplace.FrontendService/PlaceBid',
-                request_serializer=frontend__pb2.PlaceBidRequest.SerializeToString,
-                response_deserializer=frontend__pb2.PlaceBidResponse.FromString,
+                '/marketplace.MarketplaceService/PlaceBid',
+                request_serializer=marketplace__pb2.PlaceBidRequest.SerializeToString,
+                response_deserializer=marketplace__pb2.PlaceBidResponse.FromString,
                 _registered_method=True)
 
 
-class FrontendServiceServicer(object):
+class MarketplaceServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def CreateItem(self, request, context):
@@ -95,42 +95,42 @@ class FrontendServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_FrontendServiceServicer_to_server(servicer, server):
+def add_MarketplaceServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'CreateItem': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateItem,
-                    request_deserializer=frontend__pb2.CreateItemRequest.FromString,
-                    response_serializer=frontend__pb2.CreateItemResponse.SerializeToString,
+                    request_deserializer=marketplace__pb2.CreateItemRequest.FromString,
+                    response_serializer=marketplace__pb2.CreateItemResponse.SerializeToString,
             ),
             'GetItem': grpc.unary_unary_rpc_method_handler(
                     servicer.GetItem,
-                    request_deserializer=frontend__pb2.GetItemRequest.FromString,
-                    response_serializer=frontend__pb2.GetItemResponse.SerializeToString,
+                    request_deserializer=marketplace__pb2.GetItemRequest.FromString,
+                    response_serializer=marketplace__pb2.GetItemResponse.SerializeToString,
             ),
             'SearchItems': grpc.unary_unary_rpc_method_handler(
                     servicer.SearchItems,
-                    request_deserializer=frontend__pb2.SearchItemsRequest.FromString,
-                    response_serializer=frontend__pb2.SearchItemsResponse.SerializeToString,
+                    request_deserializer=marketplace__pb2.SearchItemsRequest.FromString,
+                    response_serializer=marketplace__pb2.SearchItemsResponse.SerializeToString,
             ),
             'UpdateItem': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateItem,
-                    request_deserializer=frontend__pb2.UpdateItemRequest.FromString,
-                    response_serializer=frontend__pb2.UpdateItemResponse.SerializeToString,
+                    request_deserializer=marketplace__pb2.UpdateItemRequest.FromString,
+                    response_serializer=marketplace__pb2.UpdateItemResponse.SerializeToString,
             ),
             'PlaceBid': grpc.unary_unary_rpc_method_handler(
                     servicer.PlaceBid,
-                    request_deserializer=frontend__pb2.PlaceBidRequest.FromString,
-                    response_serializer=frontend__pb2.PlaceBidResponse.SerializeToString,
+                    request_deserializer=marketplace__pb2.PlaceBidRequest.FromString,
+                    response_serializer=marketplace__pb2.PlaceBidResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'marketplace.FrontendService', rpc_method_handlers)
+            'marketplace.MarketplaceService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('marketplace.FrontendService', rpc_method_handlers)
+    server.add_registered_method_handlers('marketplace.MarketplaceService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class FrontendService(object):
+class MarketplaceService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -147,9 +147,9 @@ class FrontendService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/marketplace.FrontendService/CreateItem',
-            frontend__pb2.CreateItemRequest.SerializeToString,
-            frontend__pb2.CreateItemResponse.FromString,
+            '/marketplace.MarketplaceService/CreateItem',
+            marketplace__pb2.CreateItemRequest.SerializeToString,
+            marketplace__pb2.CreateItemResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -174,9 +174,9 @@ class FrontendService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/marketplace.FrontendService/GetItem',
-            frontend__pb2.GetItemRequest.SerializeToString,
-            frontend__pb2.GetItemResponse.FromString,
+            '/marketplace.MarketplaceService/GetItem',
+            marketplace__pb2.GetItemRequest.SerializeToString,
+            marketplace__pb2.GetItemResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -201,9 +201,9 @@ class FrontendService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/marketplace.FrontendService/SearchItems',
-            frontend__pb2.SearchItemsRequest.SerializeToString,
-            frontend__pb2.SearchItemsResponse.FromString,
+            '/marketplace.MarketplaceService/SearchItems',
+            marketplace__pb2.SearchItemsRequest.SerializeToString,
+            marketplace__pb2.SearchItemsResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -228,9 +228,9 @@ class FrontendService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/marketplace.FrontendService/UpdateItem',
-            frontend__pb2.UpdateItemRequest.SerializeToString,
-            frontend__pb2.UpdateItemResponse.FromString,
+            '/marketplace.MarketplaceService/UpdateItem',
+            marketplace__pb2.UpdateItemRequest.SerializeToString,
+            marketplace__pb2.UpdateItemResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -255,9 +255,9 @@ class FrontendService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/marketplace.FrontendService/PlaceBid',
-            frontend__pb2.PlaceBidRequest.SerializeToString,
-            frontend__pb2.PlaceBidResponse.FromString,
+            '/marketplace.MarketplaceService/PlaceBid',
+            marketplace__pb2.PlaceBidRequest.SerializeToString,
+            marketplace__pb2.PlaceBidResponse.FromString,
             options,
             channel_credentials,
             insecure,
