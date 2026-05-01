@@ -161,3 +161,105 @@ class AuctionUpdate(_message.Message):
     message: str
     version: int
     def __init__(self, item_id: _Optional[str] = ..., current_price: _Optional[float] = ..., bidder_id: _Optional[str] = ..., event_type: _Optional[str] = ..., message: _Optional[str] = ..., version: _Optional[int] = ...) -> None: ...
+
+class StorageWriteRequest(_message.Message):
+    __slots__ = ("item", "operation", "proposed_version")
+    ITEM_FIELD_NUMBER: _ClassVar[int]
+    OPERATION_FIELD_NUMBER: _ClassVar[int]
+    PROPOSED_VERSION_FIELD_NUMBER: _ClassVar[int]
+    item: Item
+    operation: str
+    proposed_version: int
+    def __init__(self, item: _Optional[_Union[Item, _Mapping]] = ..., operation: _Optional[str] = ..., proposed_version: _Optional[int] = ...) -> None: ...
+
+class StorageWriteResponse(_message.Message):
+    __slots__ = ("success", "item", "message", "current_version")
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    ITEM_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    CURRENT_VERSION_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    item: Item
+    message: str
+    current_version: int
+    def __init__(self, success: bool = ..., item: _Optional[_Union[Item, _Mapping]] = ..., message: _Optional[str] = ..., current_version: _Optional[int] = ...) -> None: ...
+
+class StorageReadRequest(_message.Message):
+    __slots__ = ("item_id",)
+    ITEM_ID_FIELD_NUMBER: _ClassVar[int]
+    item_id: str
+    def __init__(self, item_id: _Optional[str] = ...) -> None: ...
+
+class StorageReadResponse(_message.Message):
+    __slots__ = ("success", "item", "message")
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    ITEM_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    item: Item
+    message: str
+    def __init__(self, success: bool = ..., item: _Optional[_Union[Item, _Mapping]] = ..., message: _Optional[str] = ...) -> None: ...
+
+class StorageSearchRequest(_message.Message):
+    __slots__ = ("keyword", "category")
+    KEYWORD_FIELD_NUMBER: _ClassVar[int]
+    CATEGORY_FIELD_NUMBER: _ClassVar[int]
+    keyword: str
+    category: str
+    def __init__(self, keyword: _Optional[str] = ..., category: _Optional[str] = ...) -> None: ...
+
+class StorageSearchResponse(_message.Message):
+    __slots__ = ("success", "items")
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    items: _containers.RepeatedCompositeFieldContainer[Item]
+    def __init__(self, success: bool = ..., items: _Optional[_Iterable[_Union[Item, _Mapping]]] = ...) -> None: ...
+
+class RepairRequest(_message.Message):
+    __slots__ = ("item",)
+    ITEM_FIELD_NUMBER: _ClassVar[int]
+    item: Item
+    def __init__(self, item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
+class RepairResponse(_message.Message):
+    __slots__ = ("success", "message")
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    message: str
+    def __init__(self, success: bool = ..., message: _Optional[str] = ...) -> None: ...
+
+class SyncRequest(_message.Message):
+    __slots__ = ("replica_id", "last_known_version")
+    REPLICA_ID_FIELD_NUMBER: _ClassVar[int]
+    LAST_KNOWN_VERSION_FIELD_NUMBER: _ClassVar[int]
+    replica_id: str
+    last_known_version: int
+    def __init__(self, replica_id: _Optional[str] = ..., last_known_version: _Optional[int] = ...) -> None: ...
+
+class SyncResponse(_message.Message):
+    __slots__ = ("items", "latest_version")
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
+    LATEST_VERSION_FIELD_NUMBER: _ClassVar[int]
+    items: _containers.RepeatedCompositeFieldContainer[Item]
+    latest_version: int
+    def __init__(self, items: _Optional[_Iterable[_Union[Item, _Mapping]]] = ..., latest_version: _Optional[int] = ...) -> None: ...
+
+class ReplicaHeartbeatRequest(_message.Message):
+    __slots__ = ("controller_id",)
+    CONTROLLER_ID_FIELD_NUMBER: _ClassVar[int]
+    controller_id: str
+    def __init__(self, controller_id: _Optional[str] = ...) -> None: ...
+
+class ReplicaHeartbeatResponse(_message.Message):
+    __slots__ = ("replica_id", "item_count", "latest_version", "healthy")
+    REPLICA_ID_FIELD_NUMBER: _ClassVar[int]
+    ITEM_COUNT_FIELD_NUMBER: _ClassVar[int]
+    LATEST_VERSION_FIELD_NUMBER: _ClassVar[int]
+    HEALTHY_FIELD_NUMBER: _ClassVar[int]
+    replica_id: str
+    item_count: int
+    latest_version: int
+    healthy: bool
+    def __init__(self, replica_id: _Optional[str] = ..., item_count: _Optional[int] = ..., latest_version: _Optional[int] = ..., healthy: bool = ...) -> None: ...

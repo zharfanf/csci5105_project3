@@ -2,8 +2,7 @@ syntax = "proto3";
 
 package marketplace;
 
-// ITEMS (Section 3.1)
-
+// item stuff
 message Item {
     string item_id = 1;
     string seller_id = 2;
@@ -13,13 +12,12 @@ message Item {
     double starting_price = 6;
     double current_price = 7;
     int32 quantity = 8;
-    string status = 9;              // "active", "sold", "auction"
-    int64 version = 10;             // optimistic concurrency / write ordering
+    string status = 9; // active, sold, auction
+    int64 version = 10;
 }
 
-// CLIENT MESSAGES (Section 3.2)
+// ---- client facing messages ----
 
-// -- CreateItem --
 message CreateItemRequest {
     string seller_id = 1;
     string title = 2;
@@ -27,7 +25,7 @@ message CreateItemRequest {
     string description = 4;
     double starting_price = 5;
     int32 quantity = 6;
-    string status = 7;              // "active" or "auction"
+    string status = 7;
 }
 
 message CreateItemResponse {
@@ -36,7 +34,6 @@ message CreateItemResponse {
     string message = 3;
 }
 
-// -- GetItem --
 message GetItemRequest {
     string item_id = 1;
 }
@@ -47,7 +44,6 @@ message GetItemResponse {
     string message = 3;
 }
 
-// -- SearchItems --
 message SearchItemsRequest {
     string keyword = 1;
     string category = 2;
@@ -59,14 +55,13 @@ message SearchItemsResponse {
     string message = 3;
 }
 
-// -- UpdateItem --
 message UpdateItemRequest {
     string item_id = 1;
     string description = 2;
     int32 quantity = 3;
     string status = 4;
     double current_price = 5;
-    int64 expected_version = 6;     // reject if item has been modified since this version
+    int64 expected_version = 6; // for optimistic concurrency check
 }
 
 message UpdateItemResponse {
@@ -75,7 +70,6 @@ message UpdateItemResponse {
     string message = 3;
 }
 
-// -- PlaceBid --
 message PlaceBidRequest {
     string item_id = 1;
     string bidder_id = 2;
@@ -88,7 +82,7 @@ message PlaceBidResponse {
     string message = 3;
 }
 
-// AUCTION (Section 3.3)
+// auction stuff
 
 message JoinAuctionRequest {
     string item_id = 1;
@@ -98,16 +92,99 @@ message JoinAuctionRequest {
 message AuctionUpdate {
     string item_id = 1;
     double current_price = 2;
-    string bidder_id = 3;           // who placed the latest bid
-    string event_type = 4;          // "new_bid", "auction_end", "joined"
+    string bidder_id = 3;
+    string event_type = 4; // new_bid, auction_end, joined
     string message = 5;
     int64 version = 6;
 }
 
-service MarketplaceService {
-  rpc CreateItem(CreateItemRequest) returns (CreateItemResponse);
-  rpc GetItem(GetItemRequest) returns (GetItemResponse);
-  rpc SearchItems(SearchItemsRequest) returns (SearchItemsResponse);
-  rpc UpdateItem(UpdateItemRequest) returns (UpdateItemResponse);
-  rpc PlaceBid(PlaceBidRequest) returns (PlaceBidResponse);
+// ---- storage messages ----
+// these are used internally between service pods and replicas
+
+message StorageWriteRequest {
+    Item item = 1;
+    string operation = 2; // create, update, bid
+    int64 proposed_version = 3;
+}
+
+message StorageWriteResponse {
+    bool success = 1;
+    Item item = 2;
+    string message = 3;
+    int64 current_version = 4;
+}
+
+message StorageReadRequest {
+    string item_id = 1;
+}
+
+message StorageReadResponse {
+    bool success = 1;
+    Item item = 2;
+    string message = 3;
+}
+
+message StorageSearchRequest {
+    string keyword = 1;
+    string category = 2;
+}
+
+message StorageSearchResponse {
+    bool success = 1;
+    repeated Item items = 2;
+}
+
+// for read repair - service pod pushes newer version to stale replica
+message RepairRequest {
+    Item item = 1;
+}
+
+message RepairResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// state sync when a replica recovers
+message SyncRequest {
+    string replica_id = 1;
+    int64 last_known_version = 2; // 0 means full sync
+}
+
+message SyncResponse {
+    repeated Item items = 1;
+    int64 latest_version = 2;
+}
+
+// controller heartbeat
+message ReplicaHeartbeatRequest {
+    string controller_id = 1;
+}
+
+message ReplicaHeartbeatResponse {
+    string replica_id = 1;
+    int64 item_count = 2;
+    int64 latest_version = 3;
+    bool healthy = 4;
+}
+
+// ---- services ----
+
+// client facing api - service pods implement this
+service FrontendService {
+    rpc CreateItem(CreateItemRequest) returns (CreateItemResponse);
+    rpc GetItem(GetItemRequest) returns (GetItemResponse);
+    rpc SearchItems(SearchItemsRequest) returns (SearchItemsResponse);
+    rpc UpdateItem(UpdateItemRequest) returns (UpdateItemResponse);
+    rpc PlaceBid(PlaceBidRequest) returns (PlaceBidResponse);
+    rpc JoinAuction(JoinAuctionRequest) returns (stream AuctionUpdate);
+}
+
+// storage api - all replicas expose this, they're all peers
+service StorageService {
+    rpc Write(StorageWriteRequest) returns (StorageWriteResponse);
+    rpc Read(StorageReadRequest) returns (StorageReadResponse);
+    rpc Search(StorageSearchRequest) returns (StorageSearchResponse);
+    rpc Repair(RepairRequest) returns (RepairResponse);
+    rpc SyncState(SyncRequest) returns (SyncResponse);
+    rpc CheckHealth(ReplicaHeartbeatRequest) returns (ReplicaHeartbeatResponse);
 }
