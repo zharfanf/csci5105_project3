@@ -25,7 +25,7 @@ STORAGE_TARGETS = [
 def storage_target(key: str) -> str:
     if key == "write":
         return STORAGE_TARGETS[0]
-    return STORAGE_TARGETS[random.randit(0,1)]
+    return STORAGE_TARGETS[random.randint(0,1)]
 
 
 class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
@@ -83,7 +83,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
         print(f"{POD_NAME} CREATED ITEM -> {target}", flush=True)
         return marketplace_pb2.CreateItemResponse(
             success=response.success, 
-            item_id=response.item_id, 
+            item_id=response.item.item_id, 
             message=response.message)
 
     def GetItem(self, request, context):
@@ -144,7 +144,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
         ## Conversion the request to target request
         requestItem = marketplace_pb2.Item(
                     item_id = request.item_id,
-                    seller_id = 0,
+                    seller_id = "",
                     title = "",
                     category = "",
                     description = request.description,
@@ -166,7 +166,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
         print(f"{POD_NAME} UPDATED ITEM -> {target}", flush=True)
         return marketplace_pb2.UpdateItemResponse(
             success=response.success, 
-            item_id=response.item_id, 
+            item=response.item, 
             message=response.message)
 
 

@@ -14,8 +14,8 @@ spec:
         app: storage
     spec:
       containers:
-        - name: ebay-storage
-          image: kv-storage:latest
+        - name: marketplace-storage
+          image: marketplace-storage:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50052

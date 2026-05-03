@@ -245,8 +245,8 @@ class StorageServiceServicer(pb2_grpc.StorageServiceServicer):
 
 
 def serve():
-    replica_id = os.environ.get("REPLICA_ID", "replica-unknown")
-    port = os.environ.get("REPLICA_PORT", "50060")
+    replica_id = os.environ.get("POD_NAME", "replica-unknown")
+    port = os.environ.get("PORT", "50052")
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2_grpc.add_StorageServiceServicer_to_server(
