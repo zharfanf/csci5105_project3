@@ -25,7 +25,7 @@ STORAGE_TARGETS = [
 def storage_target(key: str) -> str:
     if key == "write":
         return STORAGE_TARGETS[0]
-    return STORAGE_TARGETS[random.randint(0,1)]
+    return STORAGE_TARGETS[0]
 
 
 class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
@@ -116,8 +116,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
         print(f"{POD_NAME} SEARCHED -> {target}", flush=True)
         return marketplace_pb2.SearchItemsResponse(
             success=response.success, 
-            items=response.items,
-            message=response.message)
+            items=response.items)
     
     def UpdateItem(self, request, context):
         # TODO:
