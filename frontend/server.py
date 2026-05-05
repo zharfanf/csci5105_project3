@@ -27,6 +27,35 @@ def storage_target(key: str) -> str:
         return STORAGE_TARGETS[0]
     return STORAGE_TARGETS[0]
 
+# helper functions for converting between dicts and protobuf messages
+def to_proto(d):
+    return marketplace_pb2.Item(
+        item_id=d.get("item_id", ""),
+        seller_id=d.get("seller_id", ""),
+        title=d.get("title", ""),
+        category=d.get("category", ""),
+        description=d.get("description", ""),
+        starting_price=d.get("starting_price", 0.0),
+        current_price=d.get("current_price", 0.0),
+        quantity=d.get("quantity", 0),
+        status=d.get("status", "active"),
+        version=d.get("version", 0),
+    )
+
+def from_proto(item_pb):
+    return {
+        "item_id": item_pb.item_id,
+        "seller_id": item_pb.seller_id,
+        "title": item_pb.title,
+        "category": item_pb.category,
+        "description": item_pb.description,
+        "starting_price": item_pb.starting_price,
+        "current_price": item_pb.current_price,
+        "quantity": item_pb.quantity,
+        "status": item_pb.status,
+        "version": item_pb.version,
+    }
+
 
 class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
     # ASSUME THERE IS ONLY 1 MACHINE AT THE MOMENT
@@ -57,19 +86,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
         # }
         
         ## Conversion the request to target request
-        requestItem = marketplace_pb2.Item(
-                    item_id = f"{self.ITEM_ID}",
-                    seller_id = request.seller_id,
-                    title = request.title,
-                    category = request.category,
-                    description = request.description,
-                    starting_price = request.starting_price,
-                    current_price = request.starting_price,
-                    quantity = request.quantity,
-                    status = request.status,
-                    version = 1
-        )
-
+        requestItem = to_proto(request)
         target = storage_target("write")
         with grpc.insecure_channel(target) as channel:
             stub = marketplace_pb2_grpc.StorageServiceStub(channel)
@@ -141,18 +158,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
         # }
         
         ## Conversion the request to target request
-        requestItem = marketplace_pb2.Item(
-                    item_id = request.item_id,
-                    seller_id = "",
-                    title = "",
-                    category = "",
-                    description = request.description,
-                    starting_price = 0.0,
-                    current_price = request.current_price,
-                    quantity = request.quantity,
-                    status = request.status,
-                    version = request.expected_version
-        )
+        requestItem = to_proto(request)
 
         target = storage_target("write")
         with grpc.insecure_channel(target) as channel:
@@ -167,6 +173,54 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
             success=response.success, 
             item=response.item, 
             message=response.message)
+    
+    def PlaceBid(self, request, context):
+        requestItem = to_proto(request)
+
+        target = storage_target("write")
+        with grpc.insecure_channel(target) as channel:
+            stub = marketplace_pb2_grpc.StorageServiceStub(channel)
+            response = stub.Write(marketplace_pb2.StorageWriteRequest(
+                item=requestItem, operation="bid", proposed_version=1))
+        
+        
+        print(f"{POD_NAME} PLACED A BID -> {target}", flush=True)
+        return marketplace_pb2.PlaceBidResponse(
+            success=response.success, 
+            current_price=response.current_price, 
+            message=response.message)
+    
+    def PlaceBid(self, request, context):
+        requestItem = to_proto(request)
+
+        target = storage_target("write")
+        with grpc.insecure_channel(target) as channel:
+            stub = marketplace_pb2_grpc.StorageServiceStub(channel)
+            response = stub.Write(marketplace_pb2.StorageWriteRequest(
+                item=requestItem, operation="bid", proposed_version=1))
+        
+        
+        print(f"{POD_NAME} PLACED A BID -> {target}", flush=True)
+        return marketplace_pb2.PlaceBidResponse(
+            success=response.success, 
+            current_price=response.current_price, 
+            message=response.message)
+    
+    # def JoinAuction(self, request, context):
+    #     requestItem = to_proto(request)
+
+    #     target = storage_target("write")
+    #     with grpc.insecure_channel(target) as channel:
+    #         stub = marketplace_pb2_grpc.StorageServiceStub(channel)
+    #         response = stub.Write(marketplace_pb2.StorageWriteRequest(
+    #             item=requestItem, operation="bid", proposed_version=1))
+        
+        
+    #     print(f"{POD_NAME} PLACED A BID -> {target}", flush=True)
+    #     return marketplace_pb2.PlaceBidResponse(
+    #         success=response.success, 
+    #         current_price=response.current_price, 
+    #         message=response.message)
 
 
 def serve():
