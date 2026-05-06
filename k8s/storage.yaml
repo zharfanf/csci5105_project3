@@ -4,7 +4,7 @@ metadata:
   name: storage
 spec:
   serviceName: storage
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: storage

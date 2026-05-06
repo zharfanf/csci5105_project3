@@ -3,7 +3,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: frontend-hpa
 spec:
-  minReplicas: 1
+  minReplicas: 3
   maxReplicas: 5
   scaleTargetRef:
     apiVersion: apps/v1
