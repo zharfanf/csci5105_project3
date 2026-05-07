@@ -5,6 +5,19 @@ metadata:
 spec:
   minReplicas: 3
   maxReplicas: 5
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 5
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 5
+    scaleDown:
+      stabilizationWindowSeconds: 5
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 5
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
