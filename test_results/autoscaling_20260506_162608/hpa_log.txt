@@ -1,0 +1,7 @@
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         3          31m
+frontend-hpa   Deployment/frontend   cpu: 38%/70%   3         5         3          32m
+frontend-hpa   Deployment/frontend   cpu: 101%/70%   3         5         3          32m
+frontend-hpa   Deployment/frontend   cpu: 101%/70%   3         5         5          32m
+frontend-hpa   Deployment/frontend   cpu: 54%/70%    3         5         5          32m
+frontend-hpa   Deployment/frontend   cpu: 1%/70%     3         5         5          33m

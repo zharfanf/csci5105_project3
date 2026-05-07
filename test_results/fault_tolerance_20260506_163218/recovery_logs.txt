@@ -1,0 +1,20 @@
+2026-05-06 21:31:08,679 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:31:18,678 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:31:28,678 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:31:38,679 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:31:48,678 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:31:58,678 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:32:08,678 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:32:18,677 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:32:23,301 [controller] WARNING: heartbeat failed for storage-2.storage:50052 (1/3)
+2026-05-06 21:32:28,392 [controller] WARNING: heartbeat failed for storage-2.storage:50052 (2/3)
+2026-05-06 21:32:28,677 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:32:33,473 [controller] ERROR: FAILURE: storage-2.storage:50052 missed 3 heartbeats, marking dead
+2026-05-06 21:32:33,473 [controller] INFO: healthy replicas: ['storage-0.storage:50052', 'storage-1.storage:50052'] (2/3)
+2026-05-06 21:32:38,678 [controller] INFO: status: 2/3 replicas healthy - ['storage-0.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:32:48,676 [controller] INFO: status: 2/3 replicas healthy - ['storage-0.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:32:53,894 [controller] INFO: storage-2.storage:50052 is back online, starting recovery
+2026-05-06 21:32:53,894 [controller] INFO: syncing storage-2.storage:50052 from storage-0.storage:50052
+2026-05-06 21:32:54,460 [controller] INFO: recovery done: synced 806/806 items to storage-2.storage:50052
+2026-05-06 21:32:58,676 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']
+2026-05-06 21:33:08,677 [controller] INFO: status: 3/3 replicas healthy - ['storage-0.storage:50052', 'storage-2.storage:50052', 'storage-1.storage:50052']

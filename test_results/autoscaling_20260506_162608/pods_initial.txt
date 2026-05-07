@@ -1,0 +1,8 @@
+NAME                         READY   STATUS    RESTARTS   AGE   IP            NODE                    NOMINATED NODE   READINESS GATES
+controller-bfdcbff68-wtn67   1/1     Running   0          31m   10.244.0.28   desktop-control-plane   <none>           <none>
+frontend-64f88b445d-6js6s    1/1     Running   0          21m   10.244.0.37   desktop-control-plane   <none>           <none>
+frontend-64f88b445d-cshmg    1/1     Running   0          21m   10.244.0.36   desktop-control-plane   <none>           <none>
+frontend-64f88b445d-j956j    1/1     Running   0          21m   10.244.0.35   desktop-control-plane   <none>           <none>
+storage-0                    1/1     Running   0          31m   10.244.0.32   desktop-control-plane   <none>           <none>
+storage-1                    1/1     Running   0          12m   10.244.0.38   desktop-control-plane   <none>           <none>
+storage-2                    1/1     Running   0          31m   10.244.0.34   desktop-control-plane   <none>           <none>

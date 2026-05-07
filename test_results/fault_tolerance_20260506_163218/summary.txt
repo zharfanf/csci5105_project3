@@ -1,0 +1,11 @@
+  totals:
+    requests:  845
+    errors:    5
+--- scenario 1: basic functionality ---
+--- scenario 2: read-heavy workload (20s, 8 threads) ---
+--- scenario 3: burst traffic (50 concurrent requests) ---
+--- scenario 4: auction (5 bidders, 8 rounds, 5 items) ---
+  bids: 36 accepted, 4 rejected, 0 errors
+--- scenario 5: consistency check (15 items) ---
+  all 15 items consistent
+--- scenario 6: concurrent writes (5 writers, 10 each) ---

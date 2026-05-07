@@ -1,0 +1,286 @@
+connecting to localhost:50051...
+connected!
+
+
+  seeding marketplace data...
+  seeded 50 items (45 regular, 5 auction)
+
+--- scenario 1: basic functionality ---
+  creating item...
+  created: 51bc475e-fe6a-433d-af70-c8e92ff64700
+  getting item...
+  got: Basic Test Widget $25.00 v1
+  searching by keyword...
+  keyword search found 7 items
+  searching by category...
+  category search found 144 items
+  searching by keyword + category...
+  combined search found 33 items
+  updating item...
+  updated to v2
+  verifying update...
+  update verified
+  creating auction item for bid test...
+  auction item: bdf2610d-c7b5-4458-a02d-25945c0f08f8
+  placing valid bid...
+  bid accepted at $15.00
+  placing low bid (should fail)...
+  correctly rejected: write quorum not reached
+  basic tests done
+
+
+--- scenario 2: read-heavy workload (20s, 8 threads) ---
+  198 requests in 20.9s (9.5 req/s)
+
+--- scenario 3: burst traffic (50 concurrent requests) ---
+  50 requests in 4.4s (11.4 req/s)
+
+--- scenario 4: auction (5 bidders, 8 rounds, 5 items) ---
+  Vintage Pokemon Card Charizard: $50.00 (started $50.00)
+  Signed Baseball Mickey Mantle: $239.38 (started $200.00)
+  First Edition Book 1984: $561.18 (started $500.00)
+  Rare Vinyl Record Abbey Road: $212.11 (started $150.00)
+  Antique Pocket Watch 1890: $300.00 (started $300.00)
+  bids: 30 accepted, 10 rejected, 0 errors
+
+--- scenario 5: consistency check (15 items) ---
+  all 15 items consistent
+
+--- scenario 6: concurrent writes (5 writers, 10 each) ---
+  final state: v51, desc='writer-0 write-9 t=1778102819.939'
+  50/50 writes succeeded, 0 failed
+
+============================================================
+  EVALUATION RESULTS (total time: 49.6s)
+============================================================
+
+  CreateItem:
+    requests:  2
+    success:   2
+    errors:    0
+    min:       99.5ms
+    max:       100.1ms
+    mean:      99.8ms
+    median:    99.8ms
+    p95:       100.1ms
+    p99:       100.1ms
+
+  CreateItem_concurrent:
+    requests:  1
+    success:   1
+    errors:    0
+    min:       106.8ms
+    max:       106.8ms
+    mean:      106.8ms
+    median:    106.8ms
+    p95:       106.8ms
+    p99:       106.8ms
+
+  CreateItem_consistency:
+    requests:  15
+    success:   15
+    errors:    0
+    min:       98.7ms
+    max:       188.1ms
+    mean:      111.7ms
+    median:    99.9ms
+    p95:       188.1ms
+    p99:       188.1ms
+
+  CreateItem_load:
+    requests:  19
+    success:   19
+    errors:    0
+    min:       264.0ms
+    max:       667.6ms
+    mean:      435.1ms
+    median:    382.1ms
+    p95:       667.6ms
+    p99:       667.6ms
+
+  CreateItem_seed:
+    requests:  50
+    success:   50
+    errors:    0
+    min:       8.3ms
+    max:       197.7ms
+    mean:      109.3ms
+    median:    100.6ms
+    p95:       194.7ms
+    p99:       197.7ms
+
+  GetItem:
+    requests:  2
+    success:   2
+    errors:    0
+    min:       97.7ms
+    max:       192.8ms
+    mean:      145.2ms
+    median:    145.2ms
+    p95:       192.8ms
+    p99:       192.8ms
+
+  GetItem_auction:
+    requests:  40
+    success:   40
+    errors:    0
+    min:       321.6ms
+    max:       895.5ms
+    mean:      516.9ms
+    median:    485.9ms
+    p95:       893.0ms
+    p99:       895.5ms
+
+  GetItem_burst:
+    requests:  26
+    success:   26
+    errors:    0
+    min:       183.3ms
+    max:       4376.4ms
+    mean:      2788.5ms
+    median:    2979.1ms
+    p95:       4362.4ms
+    p99:       4376.4ms
+
+  GetItem_consistency:
+    requests:  15
+    success:   15
+    errors:    0
+    min:       98.5ms
+    max:       107.5ms
+    mean:      100.9ms
+    median:    100.2ms
+    p95:       107.5ms
+    p99:       107.5ms
+
+  GetItem_load:
+    requests:  77
+    success:   77
+    errors:    0
+    min:       203.8ms
+    max:       1554.6ms
+    mean:      998.5ms
+    median:    1042.9ms
+    p95:       1465.2ms
+    p99:       1554.6ms
+
+  PlaceBid:
+    requests:  2
+    success:   1
+    errors:    1
+    min:       100.2ms
+    max:       102.0ms
+    mean:      101.1ms
+    median:    101.1ms
+    p95:       102.0ms
+    p99:       102.0ms
+
+  PlaceBid_auction:
+    requests:  40
+    success:   30
+    errors:    10
+    min:       200.9ms
+    max:       599.1ms
+    mean:      417.4ms
+    median:    400.3ms
+    p95:       593.1ms
+    p99:       599.1ms
+
+  SearchItems:
+    requests:  3
+    success:   3
+    errors:    0
+    min:       34.2ms
+    max:       166.8ms
+    mean:      99.5ms
+    median:    97.6ms
+    p95:       166.8ms
+    p99:       166.8ms
+
+  SearchItems_burst:
+    requests:  17
+    success:   17
+    errors:    0
+    min:       183.4ms
+    max:       3476.5ms
+    mean:      1737.8ms
+    median:    1679.9ms
+    p95:       3476.5ms
+    p99:       3476.5ms
+
+  SearchItems_load:
+    requests:  66
+    success:   66
+    errors:    0
+    min:       350.0ms
+    max:       1391.4ms
+    mean:      821.2ms
+    median:    851.6ms
+    p95:       1254.8ms
+    p99:       1391.4ms
+
+  UpdateItem:
+    requests:  1
+    success:   1
+    errors:    0
+    min:       102.6ms
+    max:       102.6ms
+    mean:      102.6ms
+    median:    102.6ms
+    p95:       102.6ms
+    p99:       102.6ms
+
+  UpdateItem_burst:
+    requests:  7
+    success:   7
+    errors:    0
+    min:       776.4ms
+    max:       1963.9ms
+    mean:      1273.5ms
+    median:    1365.3ms
+    p95:       1963.9ms
+    p99:       1963.9ms
+
+  UpdateItem_concurrent:
+    requests:  50
+    success:   50
+    errors:    0
+    min:       102.8ms
+    max:       685.2ms
+    mean:      374.2ms
+    median:    369.0ms
+    p95:       569.8ms
+    p99:       685.2ms
+
+  UpdateItem_load:
+    requests:  36
+    success:   36
+    errors:    0
+    min:       302.3ms
+    max:       751.4ms
+    mean:      512.5ms
+    median:    516.3ms
+    p95:       685.7ms
+    p99:       751.4ms
+
+  totals:
+    requests:  469
+    errors:    11
+    avg lat:   713.6ms
+============================================================
+
+--- fault tolerance test (manual) ---
+  1. run this eval script
+  2. while running, kill a storage pod:
+     kubectl delete pod storage-1
+  3. watch controller logs:
+     kubectl logs -f <controller-pod>
+  4. observe recovery when pod restarts
+
+--- autoscaling test (manual) ---
+  1. increase load: TARGET=localhost:50051 python eval.py
+     (or run multiple instances in parallel)
+  2. watch HPA:
+     kubectl get hpa -w
+  3. watch pods scale:
+     kubectl get pods -w

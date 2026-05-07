@@ -160,15 +160,15 @@ class StorageServiceServicer(pb2_grpc.StorageServiceServicer):
                 existing["status"] = item_dict["status"]
             if item_dict["current_price"] > 0:
                 existing["current_price"] = item_dict["current_price"]
-            existing["version"] = version
+            existing["version"] = existing["version"] + 1
 
             self.state.put(existing)
-            logger.info(f"[{self.replica_id}] updated {existing['item_id']} v{version}")
+            logger.info(f"[{self.replica_id}] updated {existing['item_id']} v{existing['version']}")
             return pb2.StorageWriteResponse(
                 success=True,
                 item=to_proto(existing),
                 message="updated",
-                current_version=version
+                current_version=existing["version"]
             )
 
         elif op == "bid":
@@ -192,15 +192,15 @@ class StorageServiceServicer(pb2_grpc.StorageServiceServicer):
 
             # accept the bid
             existing["current_price"] = item_dict["current_price"]
-            existing["version"] = version
+            existing["version"] = existing["version"] + 1
             self.state.put(existing)
 
-            logger.info(f"[{self.replica_id}] bid on {existing['item_id']}: ${item_dict['current_price']:.2f} v{version}")
+            logger.info(f"[{self.replica_id}] bid on {existing['item_id']}: ${item_dict['current_price']:.2f} v{existing['version']}")
             return pb2.StorageWriteResponse(
                 success=True,
                 item=to_proto(existing),
                 message="bid accepted",
-                current_version=version
+                current_version=existing["version"]
             )
         else:
             return pb2.StorageWriteResponse(success=False, message=f"unknown op: {op}", current_version=0)

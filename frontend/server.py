@@ -1,6 +1,7 @@
 import hashlib
 import os
 import time
+import uuid
 from concurrent import futures
 
 import grpc
@@ -29,10 +30,8 @@ READ_QUORUM = (STORAGE_COUNT // 2) + 1
 
 
 class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
-    # ASSUME THERE IS ONLY 1 MACHINE AT THE MOMENT
     def __init__(self):
-        # Maybe hashing the item_id wouldn't be a bad idea
-        self.self.ITEM_ID = 0
+        pass
     
     def submit_task(self, task, quorum, timeout=2.0, **kwargs):
         successes = []
@@ -77,7 +76,7 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
 
     def CreateItem(self, request, context):
         requestItem = marketplace_pb2.Item(
-            item_id=f"{self.ITEM_ID}",
+            item_id=str(uuid.uuid4()),
             seller_id=request.seller_id,
             title=request.title,
             category=request.category,
@@ -98,9 +97,6 @@ class Frontend(marketplace_pb2_grpc.FrontendServiceServicer):
                 item_id="",
                 message="write quorum not reached",
             )
-
-        # increment the ITEM_ID
-        self.ITEM_ID += 1
 
         return marketplace_pb2.CreateItemResponse(
             success=response[0].success, 

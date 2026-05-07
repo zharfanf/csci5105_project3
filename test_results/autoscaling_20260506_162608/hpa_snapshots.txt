@@ -1,0 +1,174 @@
+--- HPA status at +10s ---
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         3          31m
+--- pods at +10s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          31m
+frontend-64f88b445d-6js6s    1/1     Running   0          21m
+frontend-64f88b445d-cshmg    1/1     Running   0          21m
+frontend-64f88b445d-j956j    1/1     Running   0          21m
+storage-0                    1/1     Running   0          31m
+storage-1                    1/1     Running   0          13m
+storage-2                    1/1     Running   0          31m
+
+--- HPA status at +20s ---
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         3          32m
+--- pods at +20s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          32m
+frontend-64f88b445d-6js6s    1/1     Running   0          22m
+frontend-64f88b445d-cshmg    1/1     Running   0          22m
+frontend-64f88b445d-j956j    1/1     Running   0          22m
+storage-0                    1/1     Running   0          31m
+storage-1                    1/1     Running   0          13m
+storage-2                    1/1     Running   0          31m
+
+--- HPA status at +30s ---
+NAME           REFERENCE             TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 38%/70%   3         5         3          32m
+--- pods at +30s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          32m
+frontend-64f88b445d-6js6s    1/1     Running   0          22m
+frontend-64f88b445d-cshmg    1/1     Running   0          22m
+frontend-64f88b445d-j956j    1/1     Running   0          22m
+storage-0                    1/1     Running   0          31m
+storage-1                    1/1     Running   0          13m
+storage-2                    1/1     Running   0          31m
+
+--- HPA status at +40s ---
+NAME           REFERENCE             TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 101%/70%   3         5         3          32m
+--- pods at +40s ---
+NAME                         READY   STATUS              RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running             0          32m
+frontend-64f88b445d-6js6s    1/1     Running             0          22m
+frontend-64f88b445d-cshmg    1/1     Running             0          22m
+frontend-64f88b445d-j956j    1/1     Running             0          22m
+frontend-64f88b445d-l9qbq    0/1     ContainerCreating   0          2s
+frontend-64f88b445d-x8phx    0/1     ContainerCreating   0          2s
+storage-0                    1/1     Running             0          31m
+storage-1                    1/1     Running             0          13m
+storage-2                    1/1     Running             0          31m
+
+--- HPA status at +50s ---
+NAME           REFERENCE             TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 101%/70%   3         5         3          32m
+--- pods at +50s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          32m
+frontend-64f88b445d-6js6s    1/1     Running   0          22m
+frontend-64f88b445d-cshmg    1/1     Running   0          22m
+frontend-64f88b445d-j956j    1/1     Running   0          22m
+frontend-64f88b445d-l9qbq    1/1     Running   0          12s
+frontend-64f88b445d-x8phx    1/1     Running   0          12s
+storage-0                    1/1     Running   0          31m
+storage-1                    1/1     Running   0          13m
+storage-2                    1/1     Running   0          31m
+
+--- HPA status at +60s ---
+NAME           REFERENCE             TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 101%/70%   3         5         5          32m
+--- pods at +60s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          32m
+frontend-64f88b445d-6js6s    1/1     Running   0          22m
+frontend-64f88b445d-cshmg    1/1     Running   0          22m
+frontend-64f88b445d-j956j    1/1     Running   0          22m
+frontend-64f88b445d-l9qbq    1/1     Running   0          22s
+frontend-64f88b445d-x8phx    1/1     Running   0          22s
+storage-0                    1/1     Running   0          32m
+storage-1                    1/1     Running   0          13m
+storage-2                    1/1     Running   0          32m
+
+--- HPA status at +70s ---
+NAME           REFERENCE             TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 54%/70%   3         5         5          32m
+--- pods at +70s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          32m
+frontend-64f88b445d-6js6s    1/1     Running   0          22m
+frontend-64f88b445d-cshmg    1/1     Running   0          22m
+frontend-64f88b445d-j956j    1/1     Running   0          22m
+frontend-64f88b445d-l9qbq    1/1     Running   0          33s
+frontend-64f88b445d-x8phx    1/1     Running   0          33s
+storage-0                    1/1     Running   0          32m
+storage-1                    1/1     Running   0          14m
+storage-2                    1/1     Running   0          32m
+
+--- HPA status at +80s ---
+NAME           REFERENCE             TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 54%/70%   3         5         5          33m
+--- pods at +80s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          33m
+frontend-64f88b445d-6js6s    1/1     Running   0          23m
+frontend-64f88b445d-cshmg    1/1     Running   0          23m
+frontend-64f88b445d-j956j    1/1     Running   0          23m
+frontend-64f88b445d-l9qbq    1/1     Running   0          43s
+frontend-64f88b445d-x8phx    1/1     Running   0          43s
+storage-0                    1/1     Running   0          32m
+storage-1                    1/1     Running   0          14m
+storage-2                    1/1     Running   0          32m
+
+--- HPA status at +90s ---
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         5          33m
+--- pods at +90s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          33m
+frontend-64f88b445d-6js6s    1/1     Running   0          23m
+frontend-64f88b445d-cshmg    1/1     Running   0          23m
+frontend-64f88b445d-j956j    1/1     Running   0          23m
+frontend-64f88b445d-l9qbq    1/1     Running   0          53s
+frontend-64f88b445d-x8phx    1/1     Running   0          53s
+storage-0                    1/1     Running   0          32m
+storage-1                    1/1     Running   0          14m
+storage-2                    1/1     Running   0          32m
+
+--- HPA status at +100s ---
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         5          33m
+--- pods at +100s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          33m
+frontend-64f88b445d-6js6s    1/1     Running   0          23m
+frontend-64f88b445d-cshmg    1/1     Running   0          23m
+frontend-64f88b445d-j956j    1/1     Running   0          23m
+frontend-64f88b445d-l9qbq    1/1     Running   0          64s
+frontend-64f88b445d-x8phx    1/1     Running   0          64s
+storage-0                    1/1     Running   0          32m
+storage-1                    1/1     Running   0          14m
+storage-2                    1/1     Running   0          32m
+
+--- HPA status at +110s ---
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         5          33m
+--- pods at +110s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          33m
+frontend-64f88b445d-6js6s    1/1     Running   0          23m
+frontend-64f88b445d-cshmg    1/1     Running   0          23m
+frontend-64f88b445d-j956j    1/1     Running   0          23m
+frontend-64f88b445d-l9qbq    1/1     Running   0          74s
+frontend-64f88b445d-x8phx    1/1     Running   0          74s
+storage-0                    1/1     Running   0          32m
+storage-1                    1/1     Running   0          14m
+storage-2                    1/1     Running   0          32m
+
+--- HPA status at +120s ---
+NAME           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+frontend-hpa   Deployment/frontend   cpu: 1%/70%   3         5         5          33m
+--- pods at +120s ---
+NAME                         READY   STATUS    RESTARTS   AGE
+controller-bfdcbff68-wtn67   1/1     Running   0          33m
+frontend-64f88b445d-6js6s    1/1     Running   0          23m
+frontend-64f88b445d-cshmg    1/1     Running   0          23m
+frontend-64f88b445d-j956j    1/1     Running   0          23m
+frontend-64f88b445d-l9qbq    1/1     Running   0          84s
+frontend-64f88b445d-x8phx    1/1     Running   0          84s
+storage-0                    1/1     Running   0          33m
+storage-1                    1/1     Running   0          14m
+storage-2                    1/1     Running   0          33m
+

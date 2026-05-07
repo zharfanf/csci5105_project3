@@ -1,7 +1,8 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-RUN python -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/marketplace.proto
-CMD ["python", "controller.py"]
+RUN pip install --root-user-action=ignore -r requirements.txt
+COPY proto /app/proto
+COPY controller /app/controller
+ENV PYTHONPATH=/app/proto/src
+CMD ["python", "controller/controller.py"]

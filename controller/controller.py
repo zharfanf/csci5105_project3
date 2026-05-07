@@ -178,7 +178,7 @@ def main():
     # get replica addresses from env
     replica_addrs = os.environ.get(
         "REPLICA_ADDRESSES",
-        "replica-0.storage-headless:50060,replica-1.storage-headless:50060,replica-2.storage-headless:50060"
+        "storage-0.storage:50052,storage-1.storage:50052,storage-2.storage:50052"
     ).split(",")
     replica_addrs = [a.strip() for a in replica_addrs if a.strip()]
 
